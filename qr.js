@@ -21,7 +21,7 @@ https://whatsapp.com/channel/0029Vasu3qP9RZAUkVkvSv32
 *Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
 https://whatsapp.com/channel/0029Vasu3qP9RZAUkVkvSv32
 
-*BEN-WHATTSAPP-BOT* 🥀
+*BEN-WHATSAPP-BOT* 🥀
 `;
 
 if (fs.existsSync('./auth_info_baileys')) {
@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
                                             margin-bottom: 20px;
                                         }
                                         img {
-                                            width: 300px; /* بزرگ‌تر کردن QR Code */
+                                            width: 300px; /* تغییر اندازه QR Code به 300x300 */
                                             height: 300px;
                                             margin-bottom: 20px;
                                         }
@@ -81,10 +81,11 @@ router.get('/', async (req, res) => {
                                             padding: 10px 20px;
                                             font-size: 16px;
                                             cursor: pointer;
+                                            margin-top: 20px;
                                         }
                                         .progress-bar {
                                             position: absolute;
-                                            top: 10px;
+                                            top: 280px; /* قرار دادن خط پیشرفت بین QR و دکمه */
                                             width: 100%;
                                             height: 5px;
                                             background-color: #ccc;
@@ -98,10 +99,10 @@ router.get('/', async (req, res) => {
                                 </head>
                                 <body>
                                     <h1>Scan the QR Code</h1>
+                                    <img src="data:image/png;base64,${qrBase64}" alt="QR Code" />
                                     <div class="progress-bar">
                                         <div class="progress-bar-inner" id="progressBar"></div>
                                     </div>
-                                    <img src="data:image/png;base64,${qrBase64}" alt="QR Code" />
                                     <button onclick="window.location.reload()">Reload</button>
                                     <script>
                                         let progress = 0;
@@ -112,10 +113,10 @@ router.get('/', async (req, res) => {
                                             if (progress === 100) {
                                                 clearInterval();
                                             }
-                                        }, 600);
+                                        }, 600); // 1 دقیقه برای پر شدن خط پیشرفت
                                         setTimeout(() => {
                                             window.location.reload();
-                                        }, 60000); // Reload after 60 seconds
+                                        }, 60000); // بارگذاری مجدد پس از 60 ثانیه
                                     </script>
                                 </body>
                                 </html>
