@@ -8,8 +8,8 @@ const path = require('path');
 const fs = require("fs-extra");
 const { Boom } = require("@hapi/boom");
 
-const MESSAGE = process.env.MESSAGE ||  `
-*SESSION GENERATED SUCCESSFULY* ✅
+const MESSAGE = process.env.MESSAGE || `
+*SESSION GENERATED SUCCESSFULLY* ✅
 
 *Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
 https://github.com/TraderAn-King/BEN_BOT-V2
@@ -46,13 +46,11 @@ router.get('/', async (req, res) => {
                 const { connection, lastDisconnect, qr } = s;
 
                 if (qr) {
-                    // اطمینان از ارسال پاسخ تنها یک بار
                     if (!res.headersSent) {
                         try {
-                            const qrBuffer = await toBuffer(qr);  // تبدیل QR به بافر
-                            const qrBase64 = qrBuffer.toString('base64'); // تبدیل بافر به Base64
+                            const qrBuffer = await toBuffer(qr);  
+                            const qrBase64 = qrBuffer.toString('base64');
 
-                            // ارسال صفحه HTML شامل QR Code و دکمه Reload
                             res.setHeader('Content-Type', 'text/html');
                             res.end(`
                                 <!DOCTYPE html>
@@ -69,11 +67,14 @@ router.get('/', async (req, res) => {
                                             height: 100vh;
                                             font-family: Arial, sans-serif;
                                             background-color: #f0f0f0;
+                                            position: relative;
                                         }
                                         h1 {
                                             margin-bottom: 20px;
                                         }
                                         img {
+                                            width: 300px; /* بزرگ‌تر کردن QR Code */
+                                            height: 300px;
                                             margin-bottom: 20px;
                                         }
                                         button {
@@ -81,12 +82,41 @@ router.get('/', async (req, res) => {
                                             font-size: 16px;
                                             cursor: pointer;
                                         }
+                                        .progress-bar {
+                                            position: absolute;
+                                            top: 10px;
+                                            width: 100%;
+                                            height: 5px;
+                                            background-color: #ccc;
+                                        }
+                                        .progress-bar-inner {
+                                            height: 100%;
+                                            background-color: #4caf50;
+                                            width: 0%;
+                                        }
                                     </style>
                                 </head>
                                 <body>
                                     <h1>Scan the QR Code</h1>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-inner" id="progressBar"></div>
+                                    </div>
                                     <img src="data:image/png;base64,${qrBase64}" alt="QR Code" />
                                     <button onclick="window.location.reload()">Reload</button>
+                                    <script>
+                                        let progress = 0;
+                                        let progressBar = document.getElementById('progressBar');
+                                        setInterval(() => {
+                                            progress += 1;
+                                            progressBar.style.width = progress + '%';
+                                            if (progress === 100) {
+                                                clearInterval();
+                                            }
+                                        }, 600);
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 60000); // Reload after 60 seconds
+                                    </script>
                                 </body>
                                 </html>
                             `);
@@ -143,16 +173,13 @@ SESSION-ID ==> ${Scan_Id}
 
                     if (reason === DisconnectReason.connectionClosed) {
                         console.log("Connection closed!");
-                        // SUHAIL().catch(err => console.log(err));
                     } else if (reason === DisconnectReason.connectionLost) {
                         console.log("Connection Lost from Server!");
-                        // SUHAIL().catch(err => console.log(err));
                     } else if (reason === DisconnectReason.restartRequired) {
                         console.log("Restart Required, Restarting...");
                         SUHAIL().catch(err => console.log(err));
                     } else if (reason === DisconnectReason.timedOut) {
                         console.log("Connection TimedOut!");
-                        // SUHAIL().catch(err => console.log(err));
                     } else {
                         console.log('Connection closed with bot. Please run again.');
                         console.log(reason);
@@ -176,7 +203,6 @@ SESSION-ID ==> ${Scan_Id}
         exec('pm2 restart qasim');
     });
 
-    // توجه: از `return await SUHAIL()` استفاده نمی‌شود زیرا پاسخ قبلاً ارسال شده است.
 });
 
 module.exports = router;
