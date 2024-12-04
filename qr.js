@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
                                 <html lang="fa">
                                 <head>
                                     <meta charset="UTF-8">
-                                    <title>QR Code</title>
+                                    <title>QR Code pairing</title>
                                     <style>
                                         body {
                                             display: flex;
@@ -66,26 +66,35 @@ router.get('/', async (req, res) => {
                                             align-items: center;
                                             height: 100vh;
                                             font-family: Arial, sans-serif;
-                                            background-color: #f0f0f0;
+                                            background-color: #e0f7fa; /* پس‌زمینه آبی ملایم */
                                             position: relative;
                                         }
                                         h1 {
                                             margin-bottom: 20px;
+                                            color: #00796b; /* رنگ متن عنوان */
                                         }
                                         img {
-                                            width: 300px; /* تغییر اندازه QR Code به 300x300 */
-                                            height: 300px;
+                                            width: 400px; /* تغییر اندازه QR Code به 400x400 */
+                                            height: 400px;
                                             margin-bottom: 20px;
+                                            border-radius: 10px; /* گرد کردن گوشه‌ها */
                                         }
                                         button {
                                             padding: 10px 20px;
                                             font-size: 16px;
                                             cursor: pointer;
                                             margin-top: 20px;
+                                            background-color: #00796b; /* رنگ آبی تیره دکمه */
+                                            color: white;
+                                            border: none;
+                                            border-radius: 5px;
+                                        }
+                                        button:hover {
+                                            background-color: #004d40; /* رنگ تیره‌تر برای حالت hover */
                                         }
                                         .progress-bar {
                                             position: absolute;
-                                            top: 280px; /* قرار دادن خط پیشرفت بین QR و دکمه */
+                                            top: 380px; /* قرار دادن خط پیشرفت بین QR و دکمه */
                                             width: 100%;
                                             height: 5px;
                                             background-color: #ccc;
@@ -98,7 +107,7 @@ router.get('/', async (req, res) => {
                                     </style>
                                 </head>
                                 <body>
-                                    <h1>Scan the QR Code</h1>
+                                    <h1>Scan the QR Code Without 1 minutes.</h1>
                                     <img src="data:image/png;base64,${qrBase64}" alt="QR Code" />
                                     <div class="progress-bar">
                                         <div class="progress-bar-inner" id="progressBar"></div>
