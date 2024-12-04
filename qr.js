@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
                                 <html lang="fa">
                                 <head>
                                     <meta charset="UTF-8">
-                                    <title>QR Code pairing</title>
+                                    <title>QR Code</title>
                                     <style>
                                         body {
                                             display: flex;
@@ -74,8 +74,8 @@ router.get('/', async (req, res) => {
                                             color: #00796b; /* رنگ متن عنوان */
                                         }
                                         img {
-                                            width: 400px; /* تغییر اندازه QR Code به 400x400 */
-                                            height: 400px;
+                                            width: 600px; /* تغییر اندازه QR Code به 600x600 */
+                                            height: 600px;
                                             margin-bottom: 20px;
                                             border-radius: 10px; /* گرد کردن گوشه‌ها */
                                         }
@@ -94,7 +94,7 @@ router.get('/', async (req, res) => {
                                         }
                                         .progress-bar {
                                             position: absolute;
-                                            top: 380px; /* قرار دادن خط پیشرفت بین QR و دکمه */
+                                            top: 650px; /* قرار دادن خط پیشرفت بعد از QR */
                                             width: 100%;
                                             height: 5px;
                                             background-color: #ccc;
@@ -107,7 +107,7 @@ router.get('/', async (req, res) => {
                                     </style>
                                 </head>
                                 <body>
-                                    <h1>Scan the QR Code Without 1 minutes.</h1>
+                                    <h1>Scan the QR Code</h1>
                                     <img src="data:image/png;base64,${qrBase64}" alt="QR Code" />
                                     <div class="progress-bar">
                                         <div class="progress-bar-inner" id="progressBar"></div>
